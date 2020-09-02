@@ -1,5 +1,6 @@
 package com.lottomatic.springbootweb.domain.post;
 
+import com.lottomatic.springbootweb.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Posts {
+public class Posts extends BaseTimeEntity {
     /*
         스프링 부트 2.0에서는 GenerationType.IDENTITY 옵션을 추가해야만 auto_increment
         @GeneratedValue(strategy = GenerationType.IDENTITY)

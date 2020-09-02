@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class WebRestController {
 
-    private PostsRepository postsRepository;
+    private final PostsRepository postsRepository;
 
     @PostMapping("/posts")
     public void savePosts(@RequestBody PostsSaveRequestDto dto){
-        postsRepository.saveAndFlush(dto.toEntity());
+        postsRepository.save(dto.toEntity());
     }
 
     @GetMapping("/hello")
