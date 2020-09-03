@@ -1,5 +1,6 @@
 package com.lottomatic.springbootweb.controller;
 
+import com.lottomatic.springbootweb.config.auth.LoginUser;
 import com.lottomatic.springbootweb.config.auth.dto.SessionUser;
 import com.lottomatic.springbootweb.dto.posts.PostsResponseDto;
 import com.lottomatic.springbootweb.service.PostService;
@@ -28,19 +29,23 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
         model.addAttribute("posts", postService.findAllDesc());
 
         /*
             (SessionUser) httpSession.getAttribute("user")
-                - 앞서 작선된 CustomOAuth2UserService에서 로그인 성공 시 세션에 SessionUser를 저장하도록 구성했습니다.
+                - 앞서 작선된 CustomOAuth2UserService 에서 로그인 성공 시 세션에 SessionUser 를 저장하도록 구성했습니다.
                 - 즉, 로그인 성공시 httpSerssion.getAttribute("user")에서 값을 가져올 수 있습니다.
+            SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
             if(user != null)
-                - 세션에 저장된 값이 있을 때만 model에 userName으로 등록
+                - 세션에 저장된 값이 있을 때만 model 에 userName 으로 등록
+
+            @LoginUser SessionUser user
+                - 기존에 (User)httpSerssion.getAttribut("user")로 가져오던 세션 정보 값이 개선되었습니다.
+                - 이제는 어느 컨트롤러든지 @LoginUser 만 사용하면 세션 정보를 가져올 수 있게 되었습니다.
         */
 
-        SessionUser user = (SessionUser) httpSession.getAttribute("user");
         if(user != null){
             model.addAttribute("userName", user.getName());
         }

@@ -45,6 +45,7 @@ dependencies {
 //	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'junit:junit:4.12'
+	implementation 'org.springframework.session:spring-session-jdbc'
 	compileOnly 'org.projectlombok:lombok'
 //	runtimeOnly 'mysql:mysql-connector-java'
 	runtime('com.h2database:h2')
