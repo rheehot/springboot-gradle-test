@@ -17,7 +17,8 @@
            : 스프링 시큐리티에서 기본적으로 제공하는 로그인 URL입니다.
       -->
       {{#userName}}
-        Logged in as : <span id="user">{{username}}</span>
+        Logged in as : <span id="user">{{userName}}</span>
+        Logged in as : <span>{{userEmail}}</span>
         <a href="/logout" class="btn btn-info active" role="button">Logout</a>
       {{/userName}}
       {{^userName}}
