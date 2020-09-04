@@ -4,7 +4,9 @@ import com.lottomatic.springbootweb.domain.user.Role;
 import com.lottomatic.springbootweb.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Value;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -63,13 +65,17 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofKakao(String userNameAttributeName,
                                            Map<String, Object> attributes) {
-        Map<String, Object> response = (Map<String, Object>) attributes.get("kakao_account");
 
-        return OAuthAttributes.builder()
+        Map<String, Object> response = (Map<String, Object>) attributes.get("kakao_account");
+        Map<String, Object> idInfos = new HashMap<>();
+        idInfos.put("id", String.valueOf(attributes.get("id")));
+        idInfos.put("connected_at", attributes.get("connected_at"));
+
+         return OAuthAttributes.builder()
                 .email((String) response.get("email"))
                 .gender((String) response.get("gender"))
                 .age((String) response.get("age_range"))
-                .attributes(response)
+                .attributes(idInfos)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
@@ -103,6 +109,8 @@ public class OAuthAttributes {
         return User.builder()
                 .name(name)
                 .email(email)
+                .gender(gender)
+                .age(age)
                 .picture(picture)
                 .role(Role.GUSET)
                 .build();
