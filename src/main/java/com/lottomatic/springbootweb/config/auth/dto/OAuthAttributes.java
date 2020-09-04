@@ -28,16 +28,20 @@ public class OAuthAttributes {
     private String nameAttributeKey;
     private String name;
     private String email;
+    private String gender;
+    private String age;
     private String picture;
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes,
                            String nameAttributeKey, String name,
-                           String email, String picture) {
+                           String email, String gender, String age, String picture) {
         this.attributes = attributes;
         this.nameAttributeKey= nameAttributeKey;
         this.name = name;
         this.email = email;
+        this. gender = gender;
+        this.age = age;
         this.picture = picture;
     }
 
@@ -45,11 +49,31 @@ public class OAuthAttributes {
                                      String userNameAttributeName,
                                      Map<String, Object> attributes) {
 
-        if("naver".equals(registrationId)) {
-            return ofNaver("id", attributes);
+        switch (registrationId){
+            case "kakao":
+                return ofKakao("id", attributes);
+            case "naver":
+                return ofNaver("id", attributes);
         }
+//        if("naver".equals(registrationId)) {
+//            return ofNaver("id", attributes);
+//        }
         return ofGoogle(userNameAttributeName, attributes);
     }
+
+    private static OAuthAttributes ofKakao(String userNameAttributeName,
+                                           Map<String, Object> attributes) {
+        Map<String, Object> response = (Map<String, Object>) attributes.get("kakao_account");
+
+        return OAuthAttributes.builder()
+                .email((String) response.get("email"))
+                .gender((String) response.get("gender"))
+                .age((String) response.get("age_range"))
+                .attributes(response)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
     private static OAuthAttributes ofNaver(String userNameAttributeName,
                                            Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");

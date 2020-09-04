@@ -1,0 +1,52 @@
+# application.properties
+#spring.h2.console.enabled=true
+#spring.datasource.url=jdbc:h2:mem:testdb
+
+# 쿼리 로그 확인
+#spring.jpa.show-sql=true
+
+# 출력되는 쿼리 로그를 MySQL 버전으로 보여줌
+#spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+
+spring:
+  profiles:
+    active: local # 기본 환경 선택
+---
+
+# application.yml
+spring:
+  profiles:
+    active: local # 기본 환경 선택
+    include : oauth
+  datasource:
+    url: "jdbc:h2:mem:testdb"
+#    data: classpath:data-h2.sql # 시작할때 실행시킬 script
+
+  session:
+    store-type: jdbc
+
+  jpa:
+    show-sql: true
+
+    properties:
+      hibernate:
+        ddl-auto: create-drop
+        dialect=org:
+          hibernate:
+            dialect:
+              MySQL5InnoDBDialect:
+
+  h2:
+    console:
+      enabled: true
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1056109941687-smp2c41frvnvspc2mvief3kdpf8ae24i.apps.googleusercontent.com
+            client-secret: DjCaSOFD9cXH5uAyFnaFkoEw
+            scope: profile,email
+
+
